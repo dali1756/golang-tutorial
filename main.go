@@ -24,4 +24,12 @@ func main() {
     fmt.Println("name:",userName2, "years old:", years)
     fmt.Printf("helo my name is %v, I'm %v years old.\n", userName2, years)
     fmt.Println(strings.Repeat("-", 50))
+
+    // data type
+    var userName3 string
+    var number2 int
+    userName3 = "hello world."
+    number2 = 123
+    fmt.Printf("name: %v number: %v\n", userName3, number2)
+    fmt.Println(strings.Repeat("-", 50))
 }
