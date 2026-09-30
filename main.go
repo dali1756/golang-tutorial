@@ -98,6 +98,10 @@ func main() {
     var lastName string
     var email string
     var userTickets uint
+    // array
+    // var bookings [50]string
+    // slice
+    var bookings []string
     fmt.Println("請輸入您的名字：")
     fmt.Scan(&firstName)
 
@@ -111,8 +115,34 @@ func main() {
     fmt.Scan(&userTickets)
 
     remainingTickets = remainingTickets - userTickets
+    // array 做法
+    // bookings[0] = firstName + " " + lastName
+    // slice 做法
+    bookings = append(bookings, firstName + " " + lastName)
+
+    // fmt.Printf("the whole array：%v\n", bookings)
+    // fmt.Printf("the first value：%v\n", bookings[0])
+    // fmt.Printf("array type：%T\n", bookings)
+    // fmt.Printf("array length：%v\n", len(bookings))
+
+    // fmt.Printf("the whole slice：%v\n", bookings)
+    // fmt.Printf("the first value：%v\n", bookings[0])
+    // fmt.Printf("slice type：%T\n", bookings)
+    // fmt.Printf("slice length：%v\n", len(bookings))
 
     fmt.Printf("thank you %v %v for booking %v tickets. you will reveive a confirmation email at %v\n", firstName, lastName, userTickets, email)
     fmt.Printf("%v tickets remaining for %v\n", remainingTickets, conferenceName)
+    fmt.Printf("these are all our bookings：%v\n", bookings)
+    fmt.Println(strings.Repeat("-", 50))
+
+    // array and slice
+    // var bookings = [50]string{"Jeter", "Jay"}
+
+    // 以下兩種方式都可以
+    // var bookings = [50]string{}
+    var bookings1 [50]string
+    bookings1[0] = "Jeter"
+    bookings1[1] = "Jay"
+    fmt.Printf("%v\n", bookings1)
     fmt.Println(strings.Repeat("-", 50))
 }
