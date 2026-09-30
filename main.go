@@ -90,35 +90,14 @@ func main() {
     fmt.Println("你好，", userName4)
     fmt.Println(strings.Repeat("-", 50))
 
-    // ex. book ticket logic
-    conferenceName := "Jeter"
-    const conferenctTickets int = 50
-    var remainingTickets uint = 50
-    var firstName string
-    var lastName string
-    var email string
-    var userTickets uint
     // array
     // var bookings [50]string
     // slice
-    var bookings []string
-    fmt.Println("請輸入您的名字：")
-    fmt.Scan(&firstName)
-
-    fmt.Println("請輸入您的姓氏：")
-    fmt.Scan(&lastName)
-
-    fmt.Println("請輸入您的 email：")
-    fmt.Scan(&email)
-
-    fmt.Println("請輸入您的票：")
-    fmt.Scan(&userTickets)
-
-    remainingTickets = remainingTickets - userTickets
+    // var bookings []string
     // array 做法
     // bookings[0] = firstName + " " + lastName
     // slice 做法
-    bookings = append(bookings, firstName + " " + lastName)
+    // bookings = append(bookings, firstName + " " + lastName)
 
     // fmt.Printf("the whole array：%v\n", bookings)
     // fmt.Printf("the first value：%v\n", bookings[0])
@@ -130,11 +109,6 @@ func main() {
     // fmt.Printf("slice type：%T\n", bookings)
     // fmt.Printf("slice length：%v\n", len(bookings))
 
-    fmt.Printf("thank you %v %v for booking %v tickets. you will reveive a confirmation email at %v\n", firstName, lastName, userTickets, email)
-    fmt.Printf("%v tickets remaining for %v\n", remainingTickets, conferenceName)
-    fmt.Printf("these are all our bookings：%v\n", bookings)
-    fmt.Println(strings.Repeat("-", 50))
-
     // array and slice
     // var bookings = [50]string{"Jeter", "Jay"}
 
@@ -145,4 +119,54 @@ func main() {
     bookings1[1] = "Jay"
     fmt.Printf("%v\n", bookings1)
     fmt.Println(strings.Repeat("-", 50))
+
+    // loops
+    for i := 1; i <= 9; i++ {
+        for j := 1; j <= 9; j++ {
+            fmt.Printf("%v X %v = %2v  ", i, j, i * j)
+        }
+        fmt.Println()
+    }
+
+    // ex. book ticket logic
+    conferenceName := "Jeter"
+    const conferenctTickets int = 50
+    var remainingTickets uint = 50
+    var bookings []string
+
+    for {
+        var firstName string
+        var lastName string
+        var email string
+        var userTickets uint
+
+        fmt.Println("請輸入您的名字：")
+        fmt.Scan(&firstName)
+
+        fmt.Println("請輸入您的姓氏：")
+        fmt.Scan(&lastName)
+
+        fmt.Println("請輸入您的 email：")
+        fmt.Scan(&email)
+
+        fmt.Println("請輸入您的票：")
+        fmt.Scan(&userTickets)
+
+        remainingTickets = remainingTickets - userTickets
+        bookings = append(bookings, firstName + " " + lastName)
+
+        fmt.Printf("thank you %v %v for booking %v tickets. you will reveive a confirmation email at %v\n", firstName, lastName, userTickets, email)
+        fmt.Printf("%v tickets remaining for %v\n", remainingTickets, conferenceName)
+    
+        // For-Each
+        // firstNames := []string{}
+        // 因 := 是空的沒有資料所以按照慣例使用 var 會比較適合
+        var firstNames []string
+        for _, booking := range bookings {
+            var names = strings.Fields(booking)
+            firstNames = append(firstNames, names[0])
+        }
+        fmt.Printf("the first name of bookings are：%v\n", firstNames)
+        fmt.Println(strings.Repeat("-", 50))
+    }
 }
