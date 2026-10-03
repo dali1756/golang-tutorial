@@ -140,9 +140,22 @@ func main() {
 	}
 	fmt.Println(strings.Repeat("-", 50))
 
+	// switch
+	city := "Taiwan"
+	switch city {
+	case "New York":
+		fmt.Println("you choices New York.")
+	case "Singapore", "Hong kong":
+		fmt.Println("you choices singapore or hong kong.")
+	case "London", "Berlin":
+		fmt.Println("you choices london or berlin.")
+	default:
+		fmt.Println("no valid city selected.")
+	}
+
 	// ex. book ticket logic
 	conferenceName := "Jeter"
-	const conferenctTickets int = 50
+	const conferenceTickets int = 50
 	var remainingTickets uint = 50
 	var bookings []string
 
@@ -164,7 +177,12 @@ func main() {
 		fmt.Println("請輸入您的票：")
 		fmt.Scan(&userTickets)
 
-		if userTickets <= remainingTickets {
+		// user input validation
+		isValidName := len(firstName) >= 2 && len(lastName) >= 2
+		isValidEmail := strings.Contains(email, "@")
+		isValidTicketNumber := userTickets > 0 && userTickets <= remainingTickets
+
+		if isValidName && isValidEmail && isValidTicketNumber {
 			remainingTickets = remainingTickets - userTickets
 			bookings = append(bookings, firstName+" "+lastName)
 
@@ -189,7 +207,15 @@ func main() {
 			}
 			// 防止使用者輸入票數大於總票數
 		} else {
-			fmt.Printf("we only have %v tickets remaining, so you can't book %v tickets.\n", remainingTickets, userTickets)
+			if !isValidName {
+				fmt.Println("請輸入正確的 first name or last name。")
+			}
+			if !isValidEmail {
+				fmt.Println("您的 email 沒有包含 @ 字元。")
+			}
+			if !isValidTicketNumber {
+				fmt.Println("您輸入的票數無效。")
+			}
 		}
 	}
 }
