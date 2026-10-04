@@ -152,6 +152,11 @@ func main() {
 	default:
 		fmt.Println("no valid city selected.")
 	}
+	fmt.Println(strings.Repeat("-", 50))
+
+	// call function
+	greetUsers()
+	fmt.Println(strings.Repeat("-", 50))
 
 	// ex. book ticket logic
 	conferenceName := "Jeter"
@@ -218,4 +223,9 @@ func main() {
 			}
 		}
 	}
+	fmt.Println(strings.Repeat("-", 50))
+}
+
+func greetUsers() {
+	fmt.Println("你好，世界。")
 }
