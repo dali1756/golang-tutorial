@@ -1,3 +1,3 @@
-module github.com/dali1756/golang-tutorial
+module golang-tutorial
 
 go 1.27.1

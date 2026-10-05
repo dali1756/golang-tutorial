@@ -3,26 +3,30 @@ package main
 import (
 	"fmt"
 	"strings"
+
+	"golang-tutorial/helper"
 )
 
 var conferenceName = "Jeter"
+
 const conferenceTickets int = 50
+
 var remainingTickets uint = 50
 var bookings []string
 
 func main() {
-    // ex. book ticket
+	// ex. book ticket
 	greetUsers()
 	fmt.Println(strings.Repeat("-", 50))
 
 	for {
-        firstName, lastName, email, userTickets := getUserInput()
-        isValidName, isValidEmail, isValidTicketNumber := validateUserInput(firstName, lastName, email, userTickets)
+		firstName, lastName, email, userTickets := getUserInput()
+		isValidName, isValidEmail, isValidTicketNumber := helper.ValidateUserInput(firstName, lastName, email, userTickets, remainingTickets)
 
 		if isValidName && isValidEmail && isValidTicketNumber {
-            bookTicket(userTickets,firstName, lastName, email)
-            firstNames := getFirstNames()
-            fmt.Printf("the first names of bookings are: %v\n", firstNames)
+			bookTicket(userTickets, firstName, lastName, email)
+			firstNames := getFirstNames()
+			fmt.Printf("the first names of bookings are: %v\n", firstNames)
 
 			if remainingTickets == 0 {
 				// end program
@@ -47,56 +51,48 @@ func main() {
 
 func greetUsers() {
 	fmt.Printf("welcome to %v booking application.\n", conferenceName)
-    fmt.Printf("we have total of %v tickets and %v are still available.\n", conferenceTickets, remainingTickets)
-    fmt.Println("get your tickets here to attend.")
-    fmt.Println(strings.Repeat("-", 50))
+	fmt.Printf("we have total of %v tickets and %v are still available.\n", conferenceTickets, remainingTickets)
+	fmt.Println("get your tickets here to attend.")
+	fmt.Println(strings.Repeat("-", 50))
 }
 
 func getFirstNames() []string {
-    // For-Each
-    // firstNames := []string{}
-    // 因 := 是空的沒有資料所以按照慣例使用 var 會比較適合
-    var firstNames []string
-    for _, booking := range bookings {
-        var names = strings.Fields(booking)
-        firstNames = append(firstNames, names[0])
-    }
-    return firstNames
-}
-
-func validateUserInput(firstName string, lastName string, email string, userTickets uint) (bool, bool, bool) {
-    // user input validation
-    isValidName := len(firstName) >= 2 && len(lastName) >= 2
-    isValidEmail := strings.Contains(email, "@")
-    isValidTicketNumber := userTickets > 0 && userTickets <= remainingTickets
-    return isValidName, isValidEmail, isValidTicketNumber
+	// For-Each
+	// firstNames := []string{}
+	// 因 := 是空的沒有資料所以按照慣例使用 var 會比較適合
+	var firstNames []string
+	for _, booking := range bookings {
+		var names = strings.Fields(booking)
+		firstNames = append(firstNames, names[0])
+	}
+	return firstNames
 }
 
 func getUserInput() (string, string, string, uint) {
-    var firstName string
-    var lastName string
-    var email string
-    var userTickets uint
+	var firstName string
+	var lastName string
+	var email string
+	var userTickets uint
 
-    fmt.Println("請輸入您的名字：")
-    fmt.Scan(&firstName)
+	fmt.Println("請輸入您的名字：")
+	fmt.Scan(&firstName)
 
-    fmt.Println("請輸入您的姓氏：")
-    fmt.Scan(&lastName)
+	fmt.Println("請輸入您的姓氏：")
+	fmt.Scan(&lastName)
 
-    fmt.Println("請輸入您的 email：")
-    fmt.Scan(&email)
+	fmt.Println("請輸入您的 email：")
+	fmt.Scan(&email)
 
-    fmt.Println("請輸入您的票：")
-    fmt.Scan(&userTickets)
+	fmt.Println("請輸入您的票：")
+	fmt.Scan(&userTickets)
 
-    return firstName, lastName, email, userTickets
+	return firstName, lastName, email, userTickets
 }
 
 func bookTicket(userTickets uint, firstName string, lastName string, email string) {
-    remainingTickets = remainingTickets - userTickets
-    bookings = append(bookings, firstName+" "+lastName)
+	remainingTickets = remainingTickets - userTickets
+	bookings = append(bookings, firstName+" "+lastName)
 
-    fmt.Printf("thank you %v %v for booking %v tickets. you will reveive a confirmation email at %v\n", firstName, lastName, userTickets, email)
-    fmt.Printf("%v tickets remaining for %v\n", remainingTickets, conferenceName)
+	fmt.Printf("thank you %v %v for booking %v tickets. you will reveive a confirmation email at %v\n", firstName, lastName, userTickets, email)
+	fmt.Printf("%v tickets remaining for %v\n", remainingTickets, conferenceName)
 }
