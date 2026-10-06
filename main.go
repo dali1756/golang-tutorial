@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"golang-tutorial/helper"
+	"sync"
 	"time"
 )
 
@@ -22,6 +23,7 @@ type userData struct {
 func main() {
 	// ex. book ticket
 	greetUsers()
+	var wg sync.WaitGroup
 
 	for {
 		firstName, lastName, email, userTickets := getUserInput()
@@ -29,7 +31,9 @@ func main() {
 
 		if isValidName && isValidEmail && isValidTicketNumber {
 			bookTicket(userTickets, firstName, lastName, email)
-            go sendTicket(userTickets,firstName, lastName, email)
+			wg.Go(func() {
+				sendTicket(userTickets, firstName, lastName, email)
+			})
 			firstNames := getFirstNames()
 			fmt.Printf("the first names of bookings are: %v\n", firstNames)
 
@@ -51,6 +55,8 @@ func main() {
 			}
 		}
 	}
+	// 等所有背景寄信完成，程式才結束
+	wg.Wait()
 }
 
 func greetUsers() {
