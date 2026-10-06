@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"golang-tutorial/helper"
+	"time"
 )
 
 const conferenceTickets int = 50
@@ -28,6 +29,7 @@ func main() {
 
 		if isValidName && isValidEmail && isValidTicketNumber {
 			bookTicket(userTickets, firstName, lastName, email)
+            go sendTicket(userTickets,firstName, lastName, email)
 			firstNames := getFirstNames()
 			fmt.Printf("the first names of bookings are: %v\n", firstNames)
 
@@ -103,4 +105,12 @@ func bookTicket(userTickets uint, firstName string, lastName string, email strin
 	fmt.Printf("list of bookings is %v\n", bookings)
 	fmt.Printf("thank you %v %v for booking %v tickets. you will reveive a confirmation email at %v\n", firstName, lastName, userTickets, email)
 	fmt.Printf("%v tickets remaining for %v\n", remainingTickets, conferenceName)
+}
+
+func sendTicket(userTickets uint, firstName string, lastName string, email string) {
+    time.Sleep(10 * time.Second)
+    var ticket = fmt.Sprintf("%v tickets for %v %v", userTickets, firstName, lastName)
+    fmt.Println("====================")
+    fmt.Printf("sending ticket：\n %v \nto email address %v\n", ticket, email)
+    fmt.Println("====================")
 }
