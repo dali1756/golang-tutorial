@@ -2,22 +2,18 @@ package main
 
 import (
 	"fmt"
-	"strings"
-
 	"golang-tutorial/helper"
+	"strconv"
 )
 
-var conferenceName = "Jeter"
-
 const conferenceTickets int = 50
-
+var conferenceName = "Jeter"
 var remainingTickets uint = 50
-var bookings []string
+var bookings = make([]map[string]string, 0)
 
 func main() {
 	// ex. book ticket
 	greetUsers()
-	fmt.Println(strings.Repeat("-", 50))
 
 	for {
 		firstName, lastName, email, userTickets := getUserInput()
@@ -46,14 +42,12 @@ func main() {
 			}
 		}
 	}
-	fmt.Println(strings.Repeat("-", 50))
 }
 
 func greetUsers() {
 	fmt.Printf("welcome to %v booking application.\n", conferenceName)
 	fmt.Printf("we have total of %v tickets and %v are still available.\n", conferenceTickets, remainingTickets)
 	fmt.Println("get your tickets here to attend.")
-	fmt.Println(strings.Repeat("-", 50))
 }
 
 func getFirstNames() []string {
@@ -62,8 +56,7 @@ func getFirstNames() []string {
 	// 因 := 是空的沒有資料所以按照慣例使用 var 會比較適合
 	var firstNames []string
 	for _, booking := range bookings {
-		var names = strings.Fields(booking)
-		firstNames = append(firstNames, names[0])
+		firstNames = append(firstNames, booking["firstName"])
 	}
 	return firstNames
 }
@@ -91,8 +84,15 @@ func getUserInput() (string, string, string, uint) {
 
 func bookTicket(userTickets uint, firstName string, lastName string, email string) {
 	remainingTickets = remainingTickets - userTickets
-	bookings = append(bookings, firstName+" "+lastName)
+    // create a map for a user
+    userData := make(map[string]string)
+    userData["firstName"] = firstName
+    userData["lastName"] = lastName
+    userData["email"] = email
+    userData["numberOfTickets"] = strconv.FormatUint(uint64(userTickets), 10)
+	bookings = append(bookings, userData)
 
+    fmt.Printf("list of bookings is %v\n", bookings)
 	fmt.Printf("thank you %v %v for booking %v tickets. you will reveive a confirmation email at %v\n", firstName, lastName, userTickets, email)
 	fmt.Printf("%v tickets remaining for %v\n", remainingTickets, conferenceName)
 }
